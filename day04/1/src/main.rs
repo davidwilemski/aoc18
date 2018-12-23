@@ -56,6 +56,12 @@ fn main() {
 
     println!("Guard #{} was asleep at 00:{:2} {} times", guard_id, min, count);
 
+
+    println!("Part 2:");
+
+    let ((guard_id, min), count) = mins_asleep.iter().max_by_key(|i| i.1).unwrap();
+    println!("Guard #{} was asleep {} times at 00:{:2}", guard_id, count, min);
+
 }
 
 // Example inputs:

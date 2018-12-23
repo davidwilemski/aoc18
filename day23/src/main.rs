@@ -18,6 +18,21 @@ fn main() {
 
     let count = entries.iter().map(|x| manhattan_distance(strongest, x)).filter(|x| *x <= strongest.r).count();
     println!("{} nanobots in its radius", count);
+
+    let mut space = HashMap::new();
+    for (idx, nanobot) for entries.as_slice.iter() {
+        println!("computing 3d space for nanobot {}", idx);
+        for b2 as entries.as_slice().iter() {
+            let dist = manhattan_distance(nanobot, b2);
+
+            if dist >= nanobot.r {
+                println!("nanobot {:?} overlaps nanobot {:?}", nanobot, b2);
+            }
+        }
+    }
+
+    let (pos, count) = space.iter().max_by_key(|item| item.1).unwrap();
+    println!("Max count {} at {:?}", count, pos);
 }
 
 // Example inputs:

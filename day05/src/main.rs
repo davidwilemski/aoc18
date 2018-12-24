@@ -4,7 +4,7 @@ fn main() -> io::Result<()> {
     let mut stdin = io::stdin();
     let mut polychain_str = String::new();
     stdin.read_to_string(&mut polychain_str)?;
-    let mut polychain : Vec<u8> = polychain_str.as_str().chars().filter(|c| c.is_alphabetic()).map(|c| c as u8).collect();
+    let mut polychain : Vec<u8> = polychain_str.as_str().chars().filter(|c| c.is_ascii_alphabetic()).map(|c| c as u8).collect();
 
     let mut prev_len = polychain.len() + 1;
     let mut new_polychain : Vec<u8> = Vec::new();

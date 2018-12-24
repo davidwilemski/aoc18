@@ -4,11 +4,26 @@ fn main() -> io::Result<()> {
     let mut stdin = io::stdin();
     let mut polychain_str = String::new();
     stdin.read_to_string(&mut polychain_str)?;
-    let mut polychain : Vec<u8> = polychain_str.as_str().chars().filter(|c| c.is_ascii_alphabetic()).map(|c| c as u8).collect();
+    println!("Part 1 result: {}", part_1(&polychain_str));
+
+    let alpha = "abcdefghijklmnopqrstuvwxyz";
+
+    let min_chain = alpha.chars().map(|letter| part_1(&polychain_str.as_str().replace(letter, "").as_str().replace(letter.to_ascii_uppercase(), ""))).min().unwrap();
+
+    println!("{}", min_chain);
+
+    Ok(())
+}
+
+fn reacts (c1: char, c2: char) -> bool {
+    c1 != c2 && c1.to_ascii_lowercase() == c2.to_ascii_lowercase()
+}
+
+fn part_1(polychain_str: &str) -> usize {
+    let mut polychain : Vec<u8> = polychain_str.chars().filter(|c| c.is_ascii_alphabetic()).map(|c| c as u8).collect();
 
     let mut prev_len = polychain.len() + 1;
     let mut new_polychain : Vec<u8> = Vec::new();
-    let mut iter = 1;
     while polychain.len() < prev_len {
         let mut dropped_prev = false;
         let windows = polychain.as_slice().windows(2);
@@ -36,17 +51,11 @@ fn main() -> io::Result<()> {
             }
         }
 
-        println!("polychain length after pass {}: {} {}", iter, new_polychain.len(), polychain.len());
-        iter += 1;
         prev_len = polychain.len();
         polychain = new_polychain.clone();
         assert!(polychain == new_polychain);
         new_polychain.clear();
     }
 
-    Ok(())
-}
-
-fn reacts (c1: char, c2: char) -> bool {
-    c1 != c2 && c1.to_ascii_lowercase() == c2.to_ascii_lowercase()
+    polychain.len()
 }
